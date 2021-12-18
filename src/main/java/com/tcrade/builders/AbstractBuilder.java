@@ -13,6 +13,7 @@ import java.util.Map;
 import static com.tcrade.constants.JsonAttributeConstants.CLASS;
 import static com.tcrade.constants.JsonAttributeConstants.PARAMETERS;
 import static com.tcrade.constants.JsonAttributeConstants.TYPE;
+import static org.apache.commons.lang3.StringUtils.firstNonBlank;
 import static org.apache.commons.lang3.reflect.ConstructorUtils.getMatchingAccessibleConstructor;
 
 @SuppressWarnings("unchecked")
@@ -35,8 +36,12 @@ public abstract class AbstractBuilder<T> {
         return newEntity;
     }
 
-    protected T buildNewEntity(String clazzAsString, JSONArray jsonParameters) throws Exception {
-        Class<T> clazz = (Class<T>) Class.forName(clazzAsString);
+    public Map<String, Object> getCachedObjects() {
+        return cachedObjects;
+    }
+
+    protected T buildNewEntity(String entityClassAsString, JSONArray jsonParameters) throws Exception {
+        Class<T> clazz = (Class<T>) getEntityClass(entityClassAsString);
         List<Class<?>> paramTypes = new ArrayList<>();
         List<Object> params = new ArrayList<>();
 
@@ -50,12 +55,15 @@ public abstract class AbstractBuilder<T> {
         return constructor.newInstance(params.toArray(new Object[0]));
     }
 
-    public Map<String, Object> getCachedObjects() {
-        return cachedObjects;
+    protected Class<?> getEntityClass(String entityClassSimpleName) throws ClassNotFoundException {
+        String entityClassFullName = getClassMappingMap().get(entityClassSimpleName);
+        return Class.forName(firstNonBlank(entityClassFullName, entityClassSimpleName));
     }
 
     protected abstract void populateConstructorParams(JSONObject jsonParameter,
                                                       JsonElementType jsonElementType,
                                                       List<Class<?>> paramTypes,
                                                       List<Object> params) throws Exception;
+
+    protected abstract Map<String, String> getClassMappingMap();
 }

@@ -12,11 +12,11 @@ This library was created to convert a customized json payload into `org.ta4j.cor
     "rules": [
         {
             "type": "RULE",
-            "class": "org.ta4j.core.rules.UnderIndicatorRule",
+            "class": "UnderIndicatorRule",
             "parameters": [
                 {
                     "type": "INDICATOR",
-                    "class": "org.ta4j.core.indicators.CCIIndicator",
+                    "class": "CCIIndicator",
                     "parameters": [
                         {
                             "type": "BAR_SERIES"
@@ -35,12 +35,12 @@ This library was created to convert a customized json payload into `org.ta4j.cor
         },
         {
             "type": "RULE",
-            "class": "org.ta4j.core.rules.TimeRangeRule",
+            "class": "TimeRangeRule",
             "parameters": [...]
         },
         {
             "type": "RULE",
-            "class": "org.ta4j.core.rules.TimeRangeRule",
+            "class": "TimeRangeRule",
             "parameters": [...]
         },
         ... and so on
@@ -83,17 +83,17 @@ Example of payload:
 
 {
     "type": "RULE",
-    "class": "org.ta4j.core.rules.UnderIndicatorRule",
+    "class": "UnderIndicatorRule",
     "parameters": [ 
          {
             "type": "RULE",
-            "class": "org.ta4j.core.rules.UnderIndicatorRule",
+            "class": "UnderIndicatorRule",
             "parameters": [...]
          }
          // OR
          {
             "type": "INDICATOR",
-            "class": "org.ta4j.core.indicators.CCIIndicator",
+            "class": "CCIIndicator",
             "parameters": [...]
          }
          // OR
@@ -129,11 +129,11 @@ To create an instance of this class, you should send a Rule object in this way:
 ``` json
 {
     "type": "RULE",
-    "class": "org.ta4j.core.rules.UnderIndicatorRule",
+    "class": "UnderIndicatorRule",
     "parameters": [
         {
             "type": "INDICATOR",
-            "class": "org.ta4j.core.indicators.CCIIndicator",
+            "class": "CCIIndicator",
             "parameters": [
                 {
                     "type": "BAR_SERIES"
@@ -161,7 +161,7 @@ Example of payload:
 
 {
     "type": "INDICATOR",
-    "class": "org.ta4j.core.indicators.CCIIndicator",
+    "class": "CCIIndicator",
     "parameters": [
         {
             "type": "BAR_SERIES"
@@ -169,7 +169,7 @@ Example of payload:
         // OR
         {
             "type": "INDICATOR",
-            "class": "org.ta4j.core.indicators.CCIIndicator",
+            "class": "CCIIndicator",
             "parameters": [...]
         }
         // OR
@@ -205,7 +205,7 @@ To create an instance of this class, you should send an Indicator object in this
 ``` json
 {
     "type": "INDICATOR",
-    "class": "org.ta4j.core.indicators.CCIIndicator",
+    "class": "CCIIndicator",
     "parameters": [
         {
             "type": "BAR_SERIES"
@@ -237,7 +237,7 @@ This is the class responsible for: [RuleParser.java](https://github.com/thiaguim
 
 You should initialize that class and call the [parse method](https://github.com/thiaguimcavalcanti/ta4j-strategies-factory/blob/f20a1a53248825adc42c34ee317ccb65bd28f7a1/src/main/java/com/tcrade/RuleParser.java#L27) as demonstrated below:
 ``` java
-String payload = "{\"operator\":\"AND\",\"rules\":[{\"type\":\"RULE\",\"class\":\"org.ta4j.core.rules.UnderIndicatorRule\",\"parameters\":[{\"type\":\"INDICATOR\",\"class\":\"org.ta4j.core.indicators.CCIIndicator\",\"parameters\":[{\"type\":\"TIME_SERIES\"},{\"type\":\"INTEGER\",\"value\":20}]},{\"type\":\"NUMBER\",\"value\":-100}]}]}";
+String payload = "{\"operator\":\"AND\",\"rules\":[{\"type\":\"RULE\",\"class\":\"UnderIndicatorRule\",\"parameters\":[{\"type\":\"INDICATOR\",\"class\":\"CCIIndicator\",\"parameters\":[{\"type\":\"TIME_SERIES\"},{\"type\":\"INTEGER\",\"value\":20}]},{\"type\":\"NUMBER\",\"value\":-100}]}]}";
 
 // 1. Initialize the class setting the BarSeries filled accordingly
 RuleParser parser = new RuleParser(new BaseBarSeries());

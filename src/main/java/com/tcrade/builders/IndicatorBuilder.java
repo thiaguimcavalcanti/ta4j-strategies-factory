@@ -7,9 +7,11 @@ import org.ta4j.core.BarSeries;
 import org.ta4j.core.Indicator;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.tcrade.constants.JsonAttributeConstants.CLASS;
 import static com.tcrade.constants.JsonAttributeConstants.VALUE;
+import static com.tcrade.constants.Ta4jClassMapping.INDICATOR_CLASS_MAPPING;
 
 @RequiredArgsConstructor
 public class IndicatorBuilder extends AbstractBuilder<Indicator<?>> {
@@ -38,5 +40,10 @@ public class IndicatorBuilder extends AbstractBuilder<Indicator<?>> {
                 params.add(jsonParameter.getInt(VALUE));
             }
         }
+    }
+
+    @Override
+    protected Map<String, String> getClassMappingMap() {
+        return INDICATOR_CLASS_MAPPING;
     }
 }

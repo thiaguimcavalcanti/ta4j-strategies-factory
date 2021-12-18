@@ -6,9 +6,11 @@ import org.json.JSONObject;
 import org.ta4j.core.Rule;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.tcrade.constants.JsonAttributeConstants.CLASS;
 import static com.tcrade.constants.JsonAttributeConstants.VALUE;
+import static com.tcrade.constants.Ta4jClassMapping.RULE_CLASS_MAPPING;
 
 @RequiredArgsConstructor
 public class RuleBuilder extends AbstractBuilder<Rule> {
@@ -21,11 +23,11 @@ public class RuleBuilder extends AbstractBuilder<Rule> {
                                             List<Object> params) throws Exception {
         switch (jsonElementType) {
             case RULE -> {
-                paramTypes.add(Class.forName(jsonParameter.getString(CLASS)));
+                paramTypes.add(getEntityClass(jsonParameter.getString(CLASS)));
                 params.add(build(jsonParameter));
             }
             case INDICATOR -> {
-                paramTypes.add(Class.forName(jsonParameter.getString(CLASS)));
+                paramTypes.add(indicatorBuilder.getEntityClass(jsonParameter.getString(CLASS)));
                 params.add(indicatorBuilder.build(jsonParameter));
             }
             case NUMBER -> {
@@ -37,5 +39,10 @@ public class RuleBuilder extends AbstractBuilder<Rule> {
                 params.add(jsonParameter.getInt(VALUE));
             }
         }
+    }
+
+    @Override
+    protected Map<String, String> getClassMappingMap() {
+        return RULE_CLASS_MAPPING;
     }
 }
