@@ -245,3 +245,15 @@ RuleParser parser = new RuleParser(new BaseBarSeries());
 // 2. call the parse method to convert the payload into an org.ta4j.core.Rule class
 Rule rule = parser.parse(payload);
 ```
+
+## 4. Customized Rules - Many possibilities
+
+This library provides you to create many Rule's possibilities in a simple way, using JSON structure and with easy integration to your project.
+
+Depending on your implementation, you can store this JSON payload in a database for example, and every time you receive a new ticket, a new call to the RuleParser sending the JSON to convert it into an `org.ta4j.core.Rule` to run your strategy.
+
+## 5. Tools
+
+* [Gradle 7.3.2](https://gradle.org/)
+* [Lombok 1.18.22](https://projectlombok.org)
+* [Java 17](https://www.java.com/en/download/)
