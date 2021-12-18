@@ -1,0 +1,64 @@
+package com.tcrade;
+
+import com.tcrade.builders.IndicatorBuilder;
+import com.tcrade.builders.RuleBuilder;
+import com.tcrade.enums.OperatorType;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.ta4j.core.BarSeries;
+import org.ta4j.core.BaseBarSeries;
+import org.ta4j.core.Rule;
+import org.ta4j.core.rules.BooleanRule;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Slf4j
+@RequiredArgsConstructor
+public class RuleParser {
+
+	private final RuleBuilder ruleBuilder;
+
+	public RuleParser(BarSeries series) { this(new RuleBuilder(new IndicatorBuilder(series))); }
+
+	public Rule parse(String payload) throws Exception {
+		if (StringUtils.isBlank(payload)) {
+			return BooleanRule.TRUE;
+		}
+
+		JSONObject rootElement = new JSONObject(payload);
+
+		List<Rule> rules = buildRules(rootElement.getJSONArray("rules"));
+
+		return unifyRules(rootElement.getEnum(OperatorType.class, "operator"), rules);
+	}
+
+	private List<Rule> buildRules(JSONArray ruleJsonElements) throws Exception {
+		List<Rule> rules = new ArrayList<>();
+		for (Object ruleJsonElement : ruleJsonElements) {
+			rules.add(ruleBuilder.build((JSONObject) ruleJsonElement));
+		}
+		return rules;
+	}
+
+	private Rule unifyRules(OperatorType operator, List<Rule> rules) {
+		Rule finalRule = operator.getDefaultRule();
+		for (Rule rule : rules) {
+			finalRule = operator.apply(finalRule, rule);
+		}
+		return finalRule;
+	}
+
+	public static void main(String[] args) throws Exception {
+		long startTime = System.currentTimeMillis();
+		String payload = "{\"operator\":\"AND\",\"rules\":[{\"type\":\"RULE\",\"class\":\"org.ta4j.core.rules.UnderIndicatorRule\",\"parameters\":[{\"type\":\"INDICATOR\",\"class\":\"org.ta4j.core.indicators.CCIIndicator\",\"parameters\":[{\"type\":\"TIME_SERIES\"},{\"type\":\"INTEGER\",\"value\":20}]},{\"type\":\"NUMBER\",\"value\":-100}]},{\"type\":\"RULE\",\"class\":\"org.ta4j.core.rules.UnderIndicatorRule\",\"parameters\":[{\"type\":\"INDICATOR\",\"class\":\"org.ta4j.core.indicators.MACDIndicator\",\"parameters\":[{\"type\":\"INDICATOR\",\"class\":\"org.ta4j.core.indicators.helpers.ClosePriceIndicator\",\"parameters\":[{\"type\":\"TIME_SERIES\"}]},{\"type\":\"INTEGER\",\"value\":9},{\"type\":\"INTEGER\",\"value\":16}]},{\"type\":\"INDICATOR\",\"class\":\"org.ta4j.core.indicators.EMAIndicator\",\"parameters\":[{\"type\":\"INDICATOR\",\"class\":\"org.ta4j.core.indicators.MACDIndicator\",\"parameters\":[{\"type\":\"INDICATOR\",\"class\":\"org.ta4j.core.indicators.helpers.ClosePriceIndicator\",\"parameters\":[{\"type\":\"TIME_SERIES\"}]},{\"type\":\"INTEGER\",\"value\":9},{\"type\":\"INTEGER\",\"value\":16}]},{\"type\":\"INTEGER\",\"value\":18}]}]},{\"type\":\"RULE\",\"class\":\"org.ta4j.core.rules.UnderIndicatorRule\",\"parameters\":[{\"type\":\"INDICATOR\",\"class\":\"org.ta4j.core.indicators.CCIIndicator\",\"parameters\":[{\"type\":\"TIME_SERIES\"},{\"type\":\"INTEGER\",\"value\":20}]},{\"type\":\"NUMBER\",\"value\":-100}]}]}";
+		RuleParser parser = new RuleParser(new BaseBarSeries());
+		Rule toRule = parser.parse(payload);
+		long stopTime = System.currentTimeMillis();
+		System.out.println(stopTime - startTime);
+		System.out.println(toRule);
+	}
+}
