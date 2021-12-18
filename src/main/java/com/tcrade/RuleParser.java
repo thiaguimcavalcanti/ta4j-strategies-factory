@@ -2,7 +2,7 @@ package com.tcrade;
 
 import com.tcrade.builders.IndicatorBuilder;
 import com.tcrade.builders.RuleBuilder;
-import com.tcrade.enums.OperatorType;
+import com.tcrade.enums.JsonOperatorType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -33,7 +33,7 @@ public class RuleParser {
 
 		List<Rule> rules = buildRules(rootElement.getJSONArray("rules"));
 
-		return unifyRules(rootElement.getEnum(OperatorType.class, "operator"), rules);
+		return unifyRules(rootElement.getEnum(JsonOperatorType.class, "operator"), rules);
 	}
 
 	private List<Rule> buildRules(JSONArray ruleJsonElements) throws Exception {
@@ -44,7 +44,7 @@ public class RuleParser {
 		return rules;
 	}
 
-	private Rule unifyRules(OperatorType operator, List<Rule> rules) {
+	private Rule unifyRules(JsonOperatorType operator, List<Rule> rules) {
 		Rule finalRule = operator.getDefaultRule();
 		for (Rule rule : rules) {
 			finalRule = operator.apply(finalRule, rule);
@@ -54,7 +54,7 @@ public class RuleParser {
 
 	public static void main(String[] args) throws Exception {
 		long startTime = System.currentTimeMillis();
-		String payload = "{\"operator\":\"AND\",\"rules\":[{\"type\":\"RULE\",\"class\":\"org.ta4j.core.rules.UnderIndicatorRule\",\"parameters\":[{\"type\":\"INDICATOR\",\"class\":\"org.ta4j.core.indicators.CCIIndicator\",\"parameters\":[{\"type\":\"TIME_SERIES\"},{\"type\":\"INTEGER\",\"value\":20}]},{\"type\":\"NUMBER\",\"value\":-100}]},{\"type\":\"RULE\",\"class\":\"org.ta4j.core.rules.UnderIndicatorRule\",\"parameters\":[{\"type\":\"INDICATOR\",\"class\":\"org.ta4j.core.indicators.MACDIndicator\",\"parameters\":[{\"type\":\"INDICATOR\",\"class\":\"org.ta4j.core.indicators.helpers.ClosePriceIndicator\",\"parameters\":[{\"type\":\"TIME_SERIES\"}]},{\"type\":\"INTEGER\",\"value\":9},{\"type\":\"INTEGER\",\"value\":16}]},{\"type\":\"INDICATOR\",\"class\":\"org.ta4j.core.indicators.EMAIndicator\",\"parameters\":[{\"type\":\"INDICATOR\",\"class\":\"org.ta4j.core.indicators.MACDIndicator\",\"parameters\":[{\"type\":\"INDICATOR\",\"class\":\"org.ta4j.core.indicators.helpers.ClosePriceIndicator\",\"parameters\":[{\"type\":\"TIME_SERIES\"}]},{\"type\":\"INTEGER\",\"value\":9},{\"type\":\"INTEGER\",\"value\":16}]},{\"type\":\"INTEGER\",\"value\":18}]}]},{\"type\":\"RULE\",\"class\":\"org.ta4j.core.rules.UnderIndicatorRule\",\"parameters\":[{\"type\":\"INDICATOR\",\"class\":\"org.ta4j.core.indicators.CCIIndicator\",\"parameters\":[{\"type\":\"TIME_SERIES\"},{\"type\":\"INTEGER\",\"value\":20}]},{\"type\":\"NUMBER\",\"value\":-100}]}]}";
+		String payload = "{\"operator\":\"AND\",\"rules\":[{\"type\":\"RULE\",\"class\":\"org.ta4j.core.rules.UnderIndicatorRule\",\"parameters\":[{\"type\":\"INDICATOR\",\"class\":\"org.ta4j.core.indicators.CCIIndicator\",\"parameters\":[{\"type\":\"BAR_SERIES\"},{\"type\":\"INTEGER\",\"value\":20}]},{\"type\":\"NUMBER\",\"value\":-100}]},{\"type\":\"RULE\",\"class\":\"org.ta4j.core.rules.UnderIndicatorRule\",\"parameters\":[{\"type\":\"INDICATOR\",\"class\":\"org.ta4j.core.indicators.MACDIndicator\",\"parameters\":[{\"type\":\"INDICATOR\",\"class\":\"org.ta4j.core.indicators.helpers.ClosePriceIndicator\",\"parameters\":[{\"type\":\"BAR_SERIES\"}]},{\"type\":\"INTEGER\",\"value\":9},{\"type\":\"INTEGER\",\"value\":16}]},{\"type\":\"INDICATOR\",\"class\":\"org.ta4j.core.indicators.EMAIndicator\",\"parameters\":[{\"type\":\"INDICATOR\",\"class\":\"org.ta4j.core.indicators.MACDIndicator\",\"parameters\":[{\"type\":\"INDICATOR\",\"class\":\"org.ta4j.core.indicators.helpers.ClosePriceIndicator\",\"parameters\":[{\"type\":\"BAR_SERIES\"}]},{\"type\":\"INTEGER\",\"value\":9},{\"type\":\"INTEGER\",\"value\":16}]},{\"type\":\"INTEGER\",\"value\":18}]}]},{\"type\":\"RULE\",\"class\":\"org.ta4j.core.rules.UnderIndicatorRule\",\"parameters\":[{\"type\":\"INDICATOR\",\"class\":\"org.ta4j.core.indicators.CCIIndicator\",\"parameters\":[{\"type\":\"BAR_SERIES\"},{\"type\":\"INTEGER\",\"value\":20}]},{\"type\":\"NUMBER\",\"value\":-100}]}]}";
 		RuleParser parser = new RuleParser(new BaseBarSeries());
 		Rule toRule = parser.parse(payload);
 		long stopTime = System.currentTimeMillis();

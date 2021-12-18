@@ -25,7 +25,7 @@ public class IndicatorBuilder extends AbstractBuilder<Indicator<?>> {
                 paramTypes.add(Class.forName(jsonParameter.getString(CLASS)));
                 params.add(build(jsonParameter));
             }
-            case TIME_SERIES -> {
+            case BAR_SERIES -> {
                 paramTypes.add(BarSeries.class);
                 params.add(series);
             }

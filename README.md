@@ -19,7 +19,7 @@ This library was created to convert a customized json payload into `org.ta4j.cor
                     "class": "org.ta4j.core.indicators.CCIIndicator",
                     "parameters": [
                         {
-                            "type": "TIME_SERIES"
+                            "type": "BAR_SERIES"
                         },
                         {
                             "type": "INTEGER",
@@ -36,12 +36,12 @@ This library was created to convert a customized json payload into `org.ta4j.cor
         {
             "type": "RULE",
             "class": "org.ta4j.core.rules.TimeRangeRule",
-            "parameters": [ ... ]
+            "parameters": [...]
         },
         {
             "type": "RULE",
             "class": "org.ta4j.core.rules.TimeRangeRule",
-            "parameters": [ ... ]
+            "parameters": [...]
         },
         ... and so on
     ]
@@ -88,13 +88,13 @@ Example of payload:
          {
             "type": "RULE",
             "class": "org.ta4j.core.rules.UnderIndicatorRule",
-            "parameters": [ ... ]
+            "parameters": [...]
          }
          // OR
          {
             "type": "INDICATOR",
             "class": "org.ta4j.core.indicators.CCIIndicator",
-            "parameters": [ ... ]
+            "parameters": [...]
          }
          // OR
          {
@@ -106,7 +106,7 @@ Example of payload:
             "type": "INTEGER",
             "value": 100
          }
-         // SO ON
+         // and so on
      ]
 }
 ```
@@ -136,7 +136,7 @@ To create an instance of this class, you should send a Rule object in this way:
             "class": "org.ta4j.core.indicators.CCIIndicator",
             "parameters": [
                 {
-                    "type": "TIME_SERIES"
+                    "type": "BAR_SERIES"
                 },
                 {
                     "type": "INTEGER",
@@ -164,13 +164,13 @@ Example of payload:
     "class": "org.ta4j.core.indicators.CCIIndicator",
     "parameters": [
         {
-            "type": "TIME_SERIES"
+            "type": "BAR_SERIES"
         },
         // OR
         {
             "type": "INDICATOR",
             "class": "org.ta4j.core.indicators.CCIIndicator",
-            "parameters": [ ... ]
+            "parameters": [...]
         }
         // OR
         {
@@ -182,7 +182,7 @@ Example of payload:
             "type": "INTEGER",
             "value": 100
         }
-        // SO ON
+        // and so on
     ]
 }
 ```
@@ -208,7 +208,7 @@ To create an instance of this class, you should send an Indicator object in this
     "class": "org.ta4j.core.indicators.CCIIndicator",
     "parameters": [
         {
-            "type": "TIME_SERIES"
+            "type": "BAR_SERIES"
         },
         {
             "type": "INTEGER",
@@ -216,4 +216,32 @@ To create an instance of this class, you should send an Indicator object in this
         }
     ]
 }
+```
+
+---
+
+**Available Values references**
+
+| Field    | Class                                                                                                                                                   |
+|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| type     | [JsonElementType.java](https://github.com/thiaguimcavalcanti/ta4j-strategies-factory/blob/main/src/main/java/com/tcrade/enums/JsonElementType.java)     |
+| operator | [JsonOperationType.java](https://github.com/thiaguimcavalcanti/ta4j-strategies-factory/blob/main/src/main/java/com/tcrade/enums/JsonOperationType.java) |
+
+## 3. How to use this library
+
+This library can be used as a dependency in your project. So, you will be able to access all classes parsing your json payload in Ta4j classes as demonstrated previously.
+
+### 3.1. How to parse a json payload into a Rule object
+
+This is the class responsible for: [RuleParser.java](https://github.com/thiaguimcavalcanti/ta4j-strategies-factory/blob/main/src/main/java/com/tcrade/RuleParser.java)
+
+You should initialize that class and call the [parse method](https://github.com/thiaguimcavalcanti/ta4j-strategies-factory/blob/f20a1a53248825adc42c34ee317ccb65bd28f7a1/src/main/java/com/tcrade/RuleParser.java#L27) as demonstrated below:
+``` java
+String payload = "{\"operator\":\"AND\",\"rules\":[{\"type\":\"RULE\",\"class\":\"org.ta4j.core.rules.UnderIndicatorRule\",\"parameters\":[{\"type\":\"INDICATOR\",\"class\":\"org.ta4j.core.indicators.CCIIndicator\",\"parameters\":[{\"type\":\"TIME_SERIES\"},{\"type\":\"INTEGER\",\"value\":20}]},{\"type\":\"NUMBER\",\"value\":-100}]}]}";
+
+// 1. Initialize the class setting the BarSeries filled accordingly
+RuleParser parser = new RuleParser(new BaseBarSeries());
+
+// 2. call the parse method to convert the payload into an org.ta4j.core.Rule class
+Rule rule = parser.parse(payload);
 ```
