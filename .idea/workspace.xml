@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="711f5884-44f1-4536-b98e-d994d4a9129f" name="Changes" comment="First commit">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-    </list>
+    <list default="true" id="711f5884-44f1-4536-b98e-d994d4a9129f" name="Changes" comment="Update gitignore settings" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -117,7 +115,7 @@
       <workItem from="1639600747909" duration="4481000" />
       <workItem from="1639704867378" duration="13157000" />
       <workItem from="1639787001846" duration="171000" />
-      <workItem from="1639787293529" duration="1072000" />
+      <workItem from="1639787293529" duration="1387000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1639605581386</created>
@@ -126,7 +124,14 @@
       <option name="project" value="LOCAL" />
       <updated>1639605581386</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Update gitignore settings">
+      <created>1639788599007</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1639788599008</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -148,7 +153,8 @@
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
     <MESSAGE value="First commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="First commit" />
+    <MESSAGE value="Update gitignore settings" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update gitignore settings" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
