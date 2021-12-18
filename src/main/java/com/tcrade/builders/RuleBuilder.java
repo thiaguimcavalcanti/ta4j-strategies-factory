@@ -3,7 +3,6 @@ package com.tcrade.builders;
 import com.tcrade.enums.JsonElementType;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
-import org.ta4j.core.BarSeries;
 import org.ta4j.core.Rule;
 
 import java.util.List;
