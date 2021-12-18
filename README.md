@@ -222,10 +222,10 @@ To create an instance of this class, you should send an Indicator object in this
 
 **Available Values references**
 
-| Field    | Class                                                                                                                                                  |
-|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
-| type     | [JsonElementType.java](https://github.com/thiaguimcavalcanti/ta4j-strategies-factory/blob/main/src/main/java/com/tcrade/enums/JsonElementType.java)    |
-| operator | [JsonOperationType.java](https://github.com/thiaguimcavalcanti/ta4j-strategies-factory/blob/main/src/main/java/com/tcrade/enums/JsonOperatorType.java) |
+| Field    | Class                                                                                                                                                 |
+|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| type     | [JsonElementType.java](https://github.com/thiaguimcavalcanti/ta4j-strategies-factory/blob/main/src/main/java/com/tcrade/enums/JsonElementType.java)   |
+| operator | [JsonOperatorType.java](https://github.com/thiaguimcavalcanti/ta4j-strategies-factory/blob/main/src/main/java/com/tcrade/enums/JsonOperatorType.java) |
 
 ## 3. How to use this library
 
