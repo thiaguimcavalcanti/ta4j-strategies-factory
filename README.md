@@ -257,3 +257,4 @@ Depending on your implementation, you can store this JSON payload in a database 
 * [Gradle 7.3.2](https://gradle.org/)
 * [Lombok 1.18.22](https://projectlombok.org)
 * [Java 17](https://www.java.com/en/download/)
+* [ta4j 0.14](https://github.com/ta4j/ta4j)
