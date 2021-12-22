@@ -24,7 +24,7 @@ public class IndicatorBuilder extends AbstractBuilder<Indicator<?>> {
                                              List<Object> params) throws Exception {
         switch (jsonElementType) {
             case INDICATOR -> {
-                paramTypes.add(Class.forName(jsonParameter.getString(CLASS)));
+                paramTypes.add(getEntityClass(jsonParameter.getString(CLASS)));
                 params.add(build(jsonParameter));
             }
             case BAR_SERIES -> {

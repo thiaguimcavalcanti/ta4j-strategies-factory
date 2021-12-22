@@ -5,5 +5,7 @@ public enum JsonElementType {
     INDICATOR,
     BAR_SERIES,
     INTEGER,
-    NUMBER
+    NUMBER,
+    NUM,
+    BOOLEAN
 }

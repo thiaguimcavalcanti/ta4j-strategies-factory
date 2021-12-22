@@ -22,6 +22,10 @@ public abstract class AbstractBuilder<T> {
     private final Map<String, Object> cachedObjects = new HashMap<>();
 
     public T build(JSONObject jsonElement) throws Exception {
+        if (jsonElement == null) {
+            throw new IllegalArgumentException("An element is missing during parsing of its parent!");
+        }
+
         String key = jsonElement.toString();
 
         T cachedEntity = (T) cachedObjects.get(key);

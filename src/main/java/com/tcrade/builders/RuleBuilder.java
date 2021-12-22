@@ -4,6 +4,8 @@ import com.tcrade.enums.JsonElementType;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.ta4j.core.Rule;
+import org.ta4j.core.num.DoubleNum;
+import org.ta4j.core.num.Num;
 
 import java.util.List;
 import java.util.Map;
@@ -30,6 +32,10 @@ public class RuleBuilder extends AbstractBuilder<Rule> {
                 paramTypes.add(indicatorBuilder.getEntityClass(jsonParameter.getString(CLASS)));
                 params.add(indicatorBuilder.build(jsonParameter));
             }
+            case NUM -> {
+                paramTypes.add(Num.class);
+                params.add(DoubleNum.valueOf(jsonParameter.getDouble(VALUE)));
+            }
             case NUMBER -> {
                 paramTypes.add(Number.class);
                 params.add(jsonParameter.getDouble(VALUE));
@@ -37,6 +43,10 @@ public class RuleBuilder extends AbstractBuilder<Rule> {
             case INTEGER -> {
                 paramTypes.add(Integer.TYPE);
                 params.add(jsonParameter.getInt(VALUE));
+            }
+            case BOOLEAN -> {
+                paramTypes.add(Boolean.TYPE);
+                params.add(jsonParameter.getBoolean(VALUE));
             }
         }
     }
