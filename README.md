@@ -1,3 +1,5 @@
+![Test main](https://github.com/thiaguimcavalcanti/ta4j-strategies-factory/actions/workflows/test-action.yml/badge.svg?branch=main&event=push)
+
 # Ta4j - Strategies Factory
 
 ## 1. Description
