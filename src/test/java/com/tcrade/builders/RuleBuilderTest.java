@@ -30,6 +30,7 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.apache.commons.lang3.reflect.FieldUtils.getField;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class RuleBuilderTest {
 
@@ -42,6 +43,12 @@ class RuleBuilderTest {
         series = new BaseBarSeries();
         IndicatorBuilder indicatorBuilder = new IndicatorBuilder(series);
         ruleBuilder = new RuleBuilder(indicatorBuilder);
+    }
+
+    @Test
+    public void shouldNotBuildWhenNoJsonElementIsSent() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> ruleBuilder.build(null));
+        assertEquals("An element is missing during parsing of its parent!", exception.getMessage());
     }
 
     @Test

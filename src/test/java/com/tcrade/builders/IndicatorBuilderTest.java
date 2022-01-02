@@ -24,6 +24,7 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.apache.commons.lang3.reflect.FieldUtils.getField;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class IndicatorBuilderTest {
 
@@ -35,6 +36,12 @@ class IndicatorBuilderTest {
     public void setUp() {
         series = new BaseBarSeries();
         indicatorBuilder = new IndicatorBuilder(series);
+    }
+
+    @Test
+    public void shouldNotBuildWhenNoJsonElementIsSent() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> indicatorBuilder.build(null));
+        assertEquals("An element is missing during parsing of its parent!", exception.getMessage());
     }
 
     @Test
